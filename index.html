@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Achieve Renovations - Quoting, Procurement &amp; Project System | Oxyscale AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --orange: #E8470B;
+  --bg: #111827;
+  --card: #1a2234;
+  --surface: #0f1623;
+  --border: rgba(255,255,255,0.07);
+  --accent-border: rgba(232,71,11,0.3);
+  --orange-glow: rgba(232,71,11,0.15);
+  --text: #e2e8f0;
+  --text-dim: #8896ab;
+  --text-muted: #5a6a80;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(232,71,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  position: relative;
+  z-index: 1;
+}
+.header { text-align: center; margin-bottom: 48px; }
+.brand { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); margin-bottom: 20px; }
+.header-title { font-size: 32px; font-weight: 800; line-height: 1.2; margin-bottom: 12px; color: #fff; }
+.header-title .accent { color: var(--orange); }
+.header-sub { font-size: 15px; color: var(--text-dim); max-width: 640px; margin: 0 auto 28px; line-height: 1.7; }
+.header-client { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; margin-bottom: 32px; }
+.problem-section { background: var(--surface); border: 1px solid var(--accent-border); border-radius: 12px; padding: 28px 32px; margin-bottom: 48px; position: relative; overflow: hidden; }
+.problem-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), transparent); }
+.problem-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+.problem-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+.problem-text { font-size: 14px; color: var(--text-dim); line-height: 1.8; }
+.legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 48px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dim); }
+.legend-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; background: var(--card); border: 1px solid var(--border); color: var(--text-dim); }
+.legend-icon.ai-icon { background: var(--orange-glow); border-color: var(--accent-border); color: var(--orange); }
+.phase { margin-bottom: 8px; }
+.phase-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.phase-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; background: var(--orange-glow); border: 1px solid var(--accent-border); color: var(--orange); flex-shrink: 0; }
+.phase-number { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 2px; }
+.phase-name { font-size: 20px; font-weight: 700; color: #fff; }
+.phase-body { margin-left: 24px; padding-left: 24px; border-left: 1px solid var(--border); }
+.node { background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; transition: border-color 0.2s; cursor: pointer; }
+.node:hover { border-color: rgba(255,255,255,0.15); }
+.node.ai-node { background: linear-gradient(135deg, rgba(232,71,11,0.12) 0%, rgba(232,71,11,0.04) 100%); border-color: var(--accent-border); }
+.node.ai-node:hover { border-color: rgba(232,71,11,0.5); }
+.node-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; user-select: none; }
+.node-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-dim); flex-shrink: 0; }
+.ai-node .node-icon { background: var(--orange-glow); border-color: var(--accent-border); color: var(--orange); }
+.node-label { font-size: 14px; font-weight: 600; color: #fff; flex: 1; }
+.ai-badge { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--orange); background: var(--orange-glow); border: 1px solid var(--accent-border); border-radius: 4px; padding: 2px 8px; display: inline-block; margin-left: 6px; }
+.node-detail { font-size: 12px; color: var(--text-dim); margin-top: 2px; font-weight: 400; }
+.node-arrow { font-size: 12px; color: var(--text-muted); transition: transform 0.2s; flex-shrink: 0; }
+.node.expanded .node-arrow { transform: rotate(90deg); }
+.node-content { display: none; padding: 0 18px 14px 62px; border-top: 1px solid var(--border); margin-top: 0; padding-top: 12px; }
+.node.expanded .node-content { display: block; }
+.sub-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.sub-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--text-muted); margin-top: 7px; flex-shrink: 0; }
+.ai-node .sub-dot { background: var(--orange); }
+.phase-connector { display: flex; justify-content: center; align-items: center; height: 40px; margin-left: 24px; position: relative; }
+.phase-connector::before { content: ''; width: 1px; height: 100%; background: linear-gradient(to bottom, var(--accent-border), var(--border)); }
+.phase-connector::after { content: ''; position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.node-connector { display: flex; justify-content: center; height: 16px; position: relative; }
+.node-connector::before { content: ''; width: 1px; height: 100%; background: var(--border); }
+.principles-section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; margin-top: 48px; }
+.principles-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+.principles-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+.principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.principle-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+.principle-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.principle-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+.footer { text-align: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); letter-spacing: 0.5px; }
+@media (max-width: 640px) {
+  .header-title { font-size: 24px; }
+  .principles-grid { grid-template-columns: 1fr; }
+  .legend { gap: 10px; }
+  .phase-name { font-size: 17px; }
+  .container { padding: 40px 16px 32px; }
+  .problem-section, .principles-section { padding: 20px; }
+}
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+var data = {
+  client: "Achieve Renovations",
+  title: 'Renovation <span class="accent">Quoting, Procurement &amp; Project System</span>',
+  subtitle: "A complete renovation operations platform. From calculator-style quoting and competitive contractor bidding, through live project management and automated client communication, to post-completion follow-up and cross-sell into the styling business. Every manual step in the renovation pipeline, automated.",
+  problem: {
+    title: "A Growing Renovation Business Running on Manual Processes",
+    text: "Your renovation quoting is entirely manual. Your Zoho CRM deal layout was built around styling, so every renovation quote gets forced into a system that doesn't fit. You know your per-unit rates by heart, but there's nowhere to punch them in and get a calculated quote. Each renovation proposal requires you to manually piece together trade costs, line items, and totals from scratch. Beyond quoting, contractor coordination relies on phone calls and text messages. Client updates are reactive rather than proactive. And scope changes during a project get handled informally with no paper trail - meaning additional work sometimes goes uninvoiced entirely. As the renovation arm of the business grows, none of this scales. You need a purpose-built system that handles the full lifecycle: quote it, win it, staff it, manage it, close it."
+  },
+  legend: [
+    { icon: "&#9654;", label: "Trigger", cls: "" },
+    { icon: "&#9881;", label: "Process", cls: "" },
+    { icon: "&#9889;", label: "Automation", cls: "" },
+    { icon: "&#9670;", label: "Decision", cls: "" },
+    { icon: "&#10022;", label: "AI Powered", cls: "ai-icon" }
+  ],
+  phases: [
+    {
+      icon: "&#8853;",
+      number: "Phase 1",
+      name: "Job Intake",
+      nodes: [
+        {
+          type: "trigger",
+          icon: "&#9654;",
+          label: "Open Renovation Quote Form",
+          detail: "Web-based form accessed on iPad or laptop - on-site or in the office",
+          subs: [
+            "Branded link, no login required, works on any device",
+            "Can be used on-site during a property inspection or back at the office after a call",
+            "A quote that used to take an hour should take under 5 minutes"
+          ]
+        },
+        {
+          type: "process",
+          icon: "&#9881;",
+          label: "Property and Client Details",
+          detail: "Capture the basics about the property and the client",
+          subs: [
+            "Client name, email, phone number",
+            "Property address and property type (house, apartment, townhouse)",
+            "Number of bedrooms and bathrooms (helps size the job)",
+            "Referring agent name and office (if applicable)",
+            "Target completion date or urgency level"
+          ]
+        }
+      ]
+    },
+    {
+      icon: "&#9998;",
+      number: "Phase 2",
+      name: "Trade Selection and Measurement Input",
+      nodes: [
+        {
+          type: "process",
+          icon: "&#9881;",
+          label: "Select Required Trades",
+          detail: "Multi-select checklist of all available trade categories",
+          subs: [
+            "Painting (interior walls, ceilings, exterior)",
+            "Carpet laying / Carpet removal",
+            "Floor sanding and polishing",
+            "Tiling (bathroom, kitchen, laundry)",
+            "Plastering and patching",
+            "Electrical (power points, lighting, switchboard)",
+            "Plumbing (fixtures, taps, hot water)",
+            "Carpentry (doors, skirting, architraves, built-ins)",
+            "Cleaning (builders clean, end-of-lease clean)",
+            "Demolition and strip-out",
+            "Landscaping and outdoor works",
+            "Only selected trades appear in the measurement step - keeps the form clean and fast"
+          ]
+        },
+        {
+          type: "process",
+          icon: "&#9881;",
+          label: "Input Measurements Per Trade",
+          detail: "For each selected trade, enter the unit measurement that drives pricing",
+          subs: [
+            "Painting: total sqm of walls and ceilings (e.g. 180 sqm)",
+            "Carpet: total sqm of floor area (e.g. 65 sqm)",
+            "Floor sanding: total sqm of timber floors (e.g. 40 sqm)",
+            "Tiling: total sqm of tile area (e.g. 12 sqm bathroom, 8 sqm kitchen)",
+            "Plumbing: number of fixtures or fixed call-out rate",
+            "Electrical: number of points or fixed call-out rate",
+            "Form adapts to each trade - some are per-sqm, some per-unit, some fixed price"
+          ]
+        },
+        {
+          type: "process",
+          icon: "&#9881;",
+          label: "Additional Line Items and Notes",
+          detail: "Capture one-off costs and anything non-standard",
+          subs: [
+            "Add custom line items with a description and dollar amount: skip bin ($450), scaffolding ($800), asbestos removal ($1,200)",
+            "Free-text notes field for anything non-standard: \"Bathroom requires full waterproofing. Load-bearing wall - need engineer sign-off before demolition.\"",
+            "These pass through to the quote as separate sections"
+          ]
+        }
+      ]
+    },
+    {
+      icon: "&#9889;",
+      number: "Phase 3",
+      name: "Quote Calculation and Delivery",
+      nodes: [
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Rate Database Lookup",
+          detail: "System pulls your fixed per-unit rates from a stored database",
+          subs: [
+            "Rate database stored in a Monday.com board (or Google Sheet) - simple table you can update any time",
+            "Each trade has a rate type (per sqm, per unit, per fixture, or fixed) and a dollar amount",
+            "Example: Painting interior = $18/sqm, Floor sanding = $35/sqm, Carpet supply and lay = $45/sqm",
+            "Update a rate once and every future quote reflects the new pricing instantly - single source of truth"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Automatic Price Calculation",
+          detail: "Measurements multiplied by rates, line items added, total calculated",
+          subs: [
+            "Example: Painting 180 sqm x $18/sqm = $3,240",
+            "Example: Carpet 65 sqm x $45/sqm = $2,925",
+            "Example: Floor sanding 40 sqm x $35/sqm = $1,400",
+            "Additional line items added at their specified amounts",
+            "Subtotal, GST (10%), and total calculated automatically",
+            "Optional: global margin or markup percentage applied per-trade or across the whole quote"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Professional Quote Document Generated",
+          detail: "Branded, itemised quote assembled from a pre-built template with the calculated data merged in",
+          subs: [
+            "Uses a pre-designed HTML or document template - not AI-generated, so output is consistent and predictable every time",
+            "Trade-by-trade breakdown with quantities, unit rates, and line totals",
+            "Additional line items and notes included as separate sections",
+            "Terms and conditions, payment terms, and validity period (e.g. 14 days) appended automatically",
+            "Branded with Achieve logo, contact details, and ABN",
+            "Output as a PDF attachment or a formatted HTML email - ready to send"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Quote Sent to Client",
+          detail: "Professional quote emailed to the client with a digital accept button",
+          subs: [
+            "Client receives a branded email with the itemised quote attached",
+            "Includes an Accept button for instant digital commitment",
+            "Quote validity period displayed prominently",
+            "Copy sent to Peter and the ops team for records"
+          ]
+        },
+        {
+          type: "decision",
+          icon: "&#9670;",
+          label: "Client Response Tracking",
+          detail: "System tracks acceptance, decline, or no response - and acts accordingly",
+          subs: [
+            "Accepted - triggers project setup and contractor procurement (Phases 4 and 5)",
+            "Declined - logs the outcome for reporting, optionally asks for brief feedback on why",
+            "No response after 3 days - automated follow-up email",
+            "No response after 7 days - second follow-up with a gentle urgency note",
+            "No response after 14 days - quote expires, opportunity marked as lost"
+          ]
+        }
+      ]
+    },
+    {
+      icon: "&#9881;",
+      number: "Phase 4",
+      name: "Project Setup (Triggered on Acceptance)",
+      nodes: [
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Monday.com Project Board Auto-Created",
+          detail: "A new project board is created from a master template with all job details pre-populated",
+          subs: [
+            "A master template board exists in Monday.com with groups for every possible trade and all standard columns pre-configured",
+            "On quote acceptance, the template is duplicated and renamed: [Property Address] - [Client Name]",
+            "Groups for trades that aren't needed on this job are automatically removed, leaving only the relevant ones",
+            "Columns pre-populated: Status (Not Started, Scheduled, In Progress, Complete), Contractor, Start Date, End Date, Quoted Amount",
+            "Budget summary row shows total quoted to client vs. total committed to contractors - margin visible at a glance",
+            "Peter gets one dashboard view across every active renovation project"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Deal Created in Zoho CRM",
+          detail: "Renovation deal record created with all quote details - separate from styling deals",
+          subs: [
+            "Uses a renovation-specific deal layout in Zoho CRM (separate from the styling layout)",
+            "Client details, property address, quote total, and trade breakdown all stored on the deal",
+            "Deal stage set to Quote Accepted",
+            "URL link to the Monday.com project board stored on the deal for easy cross-reference"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Deposit Invoice Sent (If Applicable)",
+          detail: "If Peter's payment terms include an upfront deposit, the invoice is generated and sent automatically",
+          subs: [
+            "Deposit percentage is configurable (e.g. 30%, 50%, or none - depends on the job)",
+            "Invoice generated in Zoho Books and emailed to the client",
+            "Payment tracked via Zoho Books as per existing process",
+            "If a deposit is required, contractor procurement does not proceed until it's paid"
+          ]
+        }
+      ]
+    },
+    {
+      icon: "&#9742;",
+      number: "Phase 5",
+      name: "Contractor Procurement",
+      nodes: [
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Bid Requests Sent to Contractor Network",
+          detail: "Multiple contractors per trade receive an automated bid request with a response deadline",
+          subs: [
+            "Contractor database stores: name, trade type(s), email, phone, reliability notes",
+            "For each trade required on the job, the system contacts 2-3 preferred contractors simultaneously",
+            "Each contractor receives a branded email with: property address, scope of work (e.g. 180 sqm interior painting), proposed date window, and a 48-hour response deadline",
+            "The email contains a prominent link to a pre-filled Contractor Response Form - this is the primary response method"
+          ]
+        },
+        {
+          type: "process",
+          icon: "&#9881;",
+          label: "Contractor Response Form (Primary Method)",
+          detail: "Each contractor clicks a unique link to submit their price and availability via a simple form",
+          subs: [
+            "The form link is unique per contractor per job - URL parameters tie the submission to the correct contractor record and project",
+            "Form fields: Quoted price ($), Available start date, Any conditions or notes",
+            "Pre-populated with the job details (address, trade, scope) so the contractor just fills in their numbers",
+            "Works on any device - tradie taps the link on their phone, fills in three fields, done",
+            "Eliminates the email-parsing problem entirely - no matter who fills it in or what device they use, the data lands in the right place",
+            "On submission: the response is written directly to the contractor comparison table on the Monday.com project board"
+          ]
+        },
+        {
+          type: "ai",
+          icon: "&#10022;",
+          label: "Email Reply Fallback (AI-Parsed)",
+          detail: "For contractors who reply to the email instead of using the form, AI extracts the key data",
+          subs: [
+            "Make.com monitors the inbox for replies from email addresses in the contractor database",
+            "AI module reads the email and extracts: quoted price, availability (yes/no), proposed dates, any conditions",
+            "Handles informal language: \"yeah can do it for 2800, free from the 10th\" - price = $2,800, start = 10th, available = yes",
+            "If the AI can't confidently extract the data (e.g. ambiguous response, questions instead of a quote), it flags the email for Peter to review manually",
+            "This is the safety net, not the primary path - most contractors will use the form because it's easier"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Bid Comparison Summary at Deadline",
+          detail: "When the response deadline passes, Peter receives a compiled comparison of all bids received",
+          subs: [
+            "Summary delivered via email and/or Monday.com notification",
+            "Shows all responses per trade: contractor name, quoted price, available dates, any conditions",
+            "Highlights the cheapest option and the earliest-available option",
+            "Shows Peter's quoted price to the client alongside the contractor costs - margin visible at a glance",
+            "Any contractors who didn't respond by the deadline are flagged as non-responsive"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Contractor Selected and Notified",
+          detail: "Peter picks the winning contractor on the Monday board - system handles the rest",
+          subs: [
+            "Peter clicks to assign the chosen contractor on the Monday.com project board",
+            "Selected contractor receives an automated confirmation email: full job details, confirmed dates, site access instructions, and Peter's phone number",
+            "Unsuccessful contractors receive a polite automated decline: \"Thanks for quoting - we've gone with another contractor for this one. We'll be in touch on the next job.\"",
+            "Contractor name, confirmed price, and dates auto-populate the project board"
+          ]
+        }
+      ]
+    },
+    {
+      icon: "&#9993;",
+      number: "Phase 6",
+      name: "Scheduling, Communication, and Progress",
+      nodes: [
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Project Timeline Sent to Client",
+          detail: "Once all trades have confirmed contractors and dates, the client receives an automated renovation timeline",
+          subs: [
+            "Triggers only when every trade on the Monday.com board has a confirmed contractor and start/end dates - no incomplete timelines get sent",
+            "Generated from the Monday.com board data: trade name, contractor, and date range per trade",
+            "Example: \"Week 1 (10-14 Mar): Demolition and strip-out. Week 2 (17-21 Mar): Plastering and electrical. Week 3 (24-28 Mar): Painting. Week 4 (31 Mar - 4 Apr): Carpet and flooring.\"",
+            "Professional, branded email - a client experience that no other renovation operator in the market is delivering",
+            "Massively reduces inbound 'when will it be done?' calls"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Contractor Reminders (48 Hours Before Start)",
+          detail: "Each contractor receives an automated reminder before their scheduled start date",
+          subs: [
+            "Sent 48 hours before the contractor's assigned start date on the Monday board",
+            "Includes: property address, scope of work, site access details, Peter's phone number",
+            "Reduces no-shows and last-minute cancellations",
+            "If a contractor doesn't confirm receipt, Peter gets a flag to follow up manually"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Client Progress Updates",
+          detail: "When Peter marks a trade as complete on the Monday board, the client is notified automatically",
+          subs: [
+            "Triggered by a status change to 'Complete' on any trade group in the Monday.com board",
+            "Example: \"Painting is now complete at your property. Carpet installation begins tomorrow.\"",
+            "Zero effort from Peter - just update the status column and the notification fires",
+            "Client feels informed and in control throughout the renovation",
+            "Final notification when the last trade is marked complete: \"All renovation works are now complete at your property.\""
+          ]
+        }
+      ]
+    },
+    {
+      icon: "&#9651;",
+      number: "Phase 7",
+      name: "Variation Management",
+      nodes: [
+        {
+          type: "trigger",
+          icon: "&#9654;",
+          label: "Scope Change Identified During the Project",
+          detail: "Plumber finds old pipework, client wants the kitchen tiled too - anything that changes the original quote",
+          subs: [
+            "Happens on virtually every renovation job",
+            "Currently handled informally via phone calls and text messages with no formal record",
+            "Additional work sometimes goes uninvoiced because there's no paper trail - this phase fixes that"
+          ]
+        },
+        {
+          type: "process",
+          icon: "&#9881;",
+          label: "Variation Form Submitted",
+          detail: "Peter opens a simple variation form - five fields, takes 30 seconds",
+          subs: [
+            "Select the project (dropdown populated from active Monday.com boards)",
+            "Select which trade this relates to (dropdown populated from the trades on that specific project)",
+            "Text description of the variation: \"Replace copper pipework in bathroom wall, discovered during demolition\"",
+            "Additional cost as a flat dollar amount - Peter types this in directly, because he already knows the cost from the contractor or from his own rates",
+            "Optional note: any context or justification for the client",
+            "This form is deliberately simple - no trade-specific logic, no rate calculations, just: what changed, how much, and why"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Variation Approval Sent to Client",
+          detail: "Client receives a formal variation request showing the change and updated project total",
+          subs: [
+            "Branded email showing: original quote total, description of the variation, variation cost, and the new total",
+            "Client can Accept or Decline the variation digitally with a single click",
+            "On acceptance: variation is logged on the Monday.com project board with a timestamp, and the Zoho CRM deal total is updated to reflect the new amount",
+            "On decline: logged as declined, original scope continues unchanged",
+            "Creates a clear paper trail for every scope change - protects both Peter and the client",
+            "No more forgotten invoicing - every approved variation is recorded and will appear on the final invoice"
+          ]
+        }
+      ]
+    },
+    {
+      icon: "&#10003;",
+      number: "Phase 8",
+      name: "Completion, Invoice, and Follow-Up",
+      nodes: [
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Final Invoice Generated",
+          detail: "Comprehensive invoice accounting for the original quote, deposit paid, and all approved variations",
+          subs: [
+            "Pulls the original trade-by-trade pricing from the accepted quote",
+            "Adds all approved variations (pulled from the variation log on the Monday.com board) with descriptions and amounts",
+            "Subtracts the deposit already paid (if applicable)",
+            "Balance due calculated and final invoice generated in Zoho Books",
+            "Complete financial paper trail from original quote through every variation to the final invoice"
+          ]
+        },
+        {
+          type: "automation",
+          icon: "&#9889;",
+          label: "Post-Project Follow-Up Sequence",
+          detail: "Automated email sequence after project completion - reviews, cross-sell, and referrals",
+          subs: [
+            "Day 3: Thank you email with Google review request (filtered - 4+ star ratings go to Google, below 4 routes to an internal feedback form so negative reviews stay private)",
+            "Day 7: Cross-sell to the styling business - \"Your renovation is complete. Now let's style it for sale. Here's what we can do.\"",
+            "Day 14: Referral request - \"Know anyone else renovating before sale? Refer a friend and receive a discount on your next project.\"",
+            "All fully automated - zero manual effort from Peter - turns every completed job into a lead generation engine",
+            "Connects the renovation pipeline directly to the styling pipeline, closing the loop between both businesses"
+          ]
+        }
+      ]
+    }
+  ],
+  principles: [
+    {
+      name: "Quote It, Win It, Staff It, Manage It, Close It",
+      desc: "This isn't just a quoting tool. It's a complete renovation operations system that handles every stage from the first measurement to the final invoice and the follow-up that wins the next job."
+    },
+    {
+      name: "Competitive Procurement, Better Margins",
+      desc: "By automatically soliciting multiple bids per trade via a structured response form, every job gets competitive pricing. Your margins improve without any extra effort."
+    },
+    {
+      name: "Client Experience as a Competitive Advantage",
+      desc: "Automated timelines, progress updates, formal variation approvals, and professional quoting create an experience that wins jobs against operators still running on phone calls and text messages."
+    }
+  ]
+};
+
+function render() {
+  var app = document.getElementById('app');
+  var html = '';
+  html += '<div class="header">';
+  html += '<div class="brand">Oxyscale AI</div>';
+  html += '<div class="header-client">' + data.client + '</div>';
+  html += '<h1 class="header-title">' + data.title + '</h1>';
+  html += '<p class="header-sub">' + data.subtitle + '</p>';
+  html += '</div>';
+  html += '<div class="problem-section">';
+  html += '<div class="problem-label">The Problem We Are Solving</div>';
+  html += '<div class="problem-title">' + data.problem.title + '</div>';
+  html += '<p class="problem-text">' + data.problem.text + '</p>';
+  html += '</div>';
+  html += '<div class="legend">';
+  data.legend.forEach(function(l) {
+    html += '<div class="legend-item"><div class="legend-icon ' + l.cls + '">' + l.icon + '</div><span>' + l.label + '</span></div>';
+  });
+  html += '</div>';
+  data.phases.forEach(function(phase, pi) {
+    html += '<div class="phase"><div class="phase-header"><div class="phase-icon">' + phase.icon + '</div><div class="phase-meta"><div class="phase-number">' + phase.number + '</div><div class="phase-name">' + phase.name + '</div></div></div><div class="phase-body">';
+    phase.nodes.forEach(function(node, ni) {
+      var isAI = node.type === 'ai';
+      html += '<div class="node' + (isAI ? ' ai-node' : '') + '" onclick="toggleNode(this)">';
+      html += '<div class="node-header">';
+      html += '<div class="node-icon">' + node.icon + '</div>';
+      html += '<div style="flex:1">';
+      html += '<div class="node-label">' + node.label;
+      if (isAI) html += '<span class="ai-badge">&#10022; AI</span>';
+      html += '</div>';
+      html += '<div class="node-detail">' + node.detail + '</div>';
+      html += '</div>';
+      html += '<div class="node-arrow">&#9656;</div>';
+      html += '</div>';
+      html += '<div class="node-content">';
+      node.subs.forEach(function(s) {
+        html += '<div class="sub-item"><div class="sub-dot"></div><span>' + s + '</span></div>';
+      });
+      html += '</div></div>';
+      if (ni < phase.nodes.length - 1) {
+        html += '<div class="node-connector"></div>';
+      }
+    });
+    html += '</div>';
+    if (pi < data.phases.length - 1) html += '<div class="phase-connector"></div>';
+    html += '</div>';
+  });
+  html += '<div class="principles-section"><div class="principles-label">Design Principles</div><div class="principles-title">How This System Was Built</div><div class="principles-grid">';
+  data.principles.forEach(function(p) { html += '<div class="principle-card"><div class="principle-name">' + p.name + '</div><div class="principle-desc">' + p.desc + '</div></div>'; });
+  html += '</div></div>';
+  html += '<div class="footer">Oxyscale AI &middot; Work Smarter, Not Harder</div>';
+  app.innerHTML = html;
+}
+function toggleNode(el) { el.classList.toggle('expanded'); }
+render();
+</script>
+</body>
+</html>
